@@ -1,25 +1,35 @@
-; put more stuff in parameters, make more general
-; need to add abswvl stuff
 function window_velocity, infile = afile ; level one file
 
   ;; Creates lit_wvls from an init file
   fname = 'init.txt'
   init_data = read_init_file(fname)
   print, 'reading init data'
-  print, 'file1 = ', file1
 
+  file1 = init_data.l1_file
+  
   ;; If filename was set, override init file
   if keyword_set(afile) then begin
      file1 = afile
   endif
-  
-  wvls = [180, 185, 192, 195, 197, 276, 280, 284]
-  windowNs = [0, 3, 6, 8, 9, 21, 23, 24] ; wavelen windows to look at
+
+  wvls = init_data.wvls
+  windowNs = init_data.windowNs
+  lit_wvls = init_data.lit_wvls
 
   ;; abswl gives the wavelength of a part of the quiet sun
   ;; we need to subtract literature wavelength, then add shift for
   ;; velocity given by art and chae paper
+  ;; to get absolute wl: abswl=wl-offset(i,j)-abs 
 
+  abswl_window = 3              ; use Fe VIII (window 3)
+  print, 'Running abswl on window ', abswl_window
+  wdfe8 = eis_getwindata(file1, abswl_window, /refill, /quiet)
+  wlcorr = wdfe8.wave_corr
+  params = 0
+  abswl, wdfe8, mx, my, wlcorr, params
+  abswl_shift = lit_wvls[abswl_window] - params(1)
+  print, 'abswl shift = ', abswl_shift
+  
   data = eis_getwindata(file1, 8, /refill, /quiet)
   points = tv_select(data.int, npts)
   
@@ -40,7 +50,7 @@ function window_velocity, infile = afile ; level one file
         ; Compensates for changes in y caused by tilted CCD
         y = yshiftap(wvls[j], wvls[3], y0)
 
-        fitvel = vel_at_point(x, y, data, windowN, init_data.lit_wvls)
+        fitvel = vel_at_point(x, y, data, windowN, lit_wvls, abswl_shift)
 
         ;; output[j, 0] and [j, 1] store the x and y coordinates
         ;; the velocities are stored in the rest of the array

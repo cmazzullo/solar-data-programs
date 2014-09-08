@@ -1,0 +1,101 @@
+; IDL Version 7.0 (linux x86 m32)
+; Journal File for apoland@SWL02
+; Working directory: /swd4/Users/EIS/art/artjim
+; Date: Sun Feb 16 11:12:12 2014
+ 
+restore,'feb14-14.sav'
+; % RESTORE: Error opening file. Unit: 101, File: feb14-14.sav
+;   No such file or directory
+restore,'feb13-14.sav'
+help,wdmgv
+restore,'allinestolev1.sav'
+; % RESTORE: Error opening file. Unit: 101, File: allinestolev1.sav
+;   No such file or directory
+restore,'alllinestolev1.sav'
+help,wdmgv
+print,mx,my
+;       5       7
+;       9      11
+mx=0
+my=0
+print,my,my
+;       0       0
+params=0
+print,params
+;       0
+pro abswl,wdfe8,mx,my,wlcorr,params
+; % Programs can't be compiled from single statement mode.
+.run abswl
+pro abswl,wdfe8,mx,my,wlcorr,params
+; % Programs can't be compiled from single statement mode.
+retall
+.run interpap
+pro abswl,wdfe8,mx,my,wlcorr,params
+; % Programs can't be compiled from single statement mode.
+retall
+.run abswl
+.run abswl
+pro abswl,wdfe8,mx,my,wlcorr,params
+; % Programs can't be compiled from single statement mode.
+retall
+abswl,wdfe8,mx,my,wlcorr,params
+;Mark the selected point with the cursor.
+;Mark the selected point with the cursor.
+;      4.00000      48.0000
+;      104.000      136.000
+; above are  x,y of box
+;      1469.00      1463.00      1458.00      1450.00      1450.00      1444.00
+;      1447.00      1463.00      1468.00      1475.00      1467.00      1485.00
+;      1483.00      1485.00      1485.00      1485.00      1460.00      1466.00
+;      1466.00      1461.00      1464.00      1471.00      1478.00      1481.00
+;  number of points at each wl
+abswl,wdfe8,mx,my,wlcorr,params
+;Mark the selected point with the cursor.
+;Mark the selected point with the cursor.
+;      6.00000      34.0000
+;      18.0000      127.000
+; above are  x,y of box
+;      3129.00      3095.00      3054.00      3091.00      3095.00      3046.00
+;      3121.00      3141.00      3131.00      3111.00      3129.00      3178.00
+;      3188.00      3185.00      3190.00      3190.00      3134.00      3144.00
+;      3121.00      3082.00      3121.00      3121.00      3129.00      3143.00
+;  number of points at each wl
+print,mx,my
+;      6.00000      34.0000
+;      18.0000      127.000
+;mx and my are the box coordinates
+help,z
+z=glinfil,params,185.0,185,45,fwl
+; % Syntax error.
+z=glinfil(params,185.0,185,45,fwl)
+; % Variable is undefined: GLINFIL.
+.run glinfil
+z=glinfil(params,185.0,185,45,fwl)
+; % GLINFIL: Incorrect number of arguments.
+oplot,fwl,z
+; % OPLOT: Expression must be an array in this context: FWL.
+help,fwl
+help,z
+plot,z,psym=-3
+plot,z,psym=3
+plot,z,psym=1
+retall
+.run abswl
+abswl,wdfe8,mx,my,wlcorr,params
+;Mark the selected point with the cursor.
+;Mark the selected point with the cursor.
+;      10.0000      40.0000
+;      20.0000      131.000
+; above are  x,y of box
+;      3416.00      3377.00      3334.00      3376.00      3370.00      3324.00
+;      3408.00      3421.00      3411.00      3396.00      3412.00      3456.00
+;      3469.00      3472.00      3472.00      3472.00      3434.00      3426.00
+;      3395.00      3367.00      3406.00      3404.00      3423.00      3428.00
+;  number of points at each wl
+; redid it so new mx,my are box coordinates
+z=glinfil(params,185.0,185.45,fwl)
+;      89.9994 nwl
+oplot,fwl,z
+print,params
+;       500.58288       185.24085     0.031201822       180.98771
+;so wl it came up with for fe8 is 185.24085

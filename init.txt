@@ -1,0 +1,46 @@
+;; FILENAME
+;; What .fits file would you like to look at?
+
+folder = "/swd4/Users/EIS/cmazzullo/solar-data-programs/"
+basename = "eis_l1_20110329_094224.fits"
+
+file = folder + basename
+ 
+;; WAVELENGTH WINDOWS
+
+wvls = [180, 185, 192, 195, 197, 276, 280, 284]
+windowNs = [0, 3, 6, 8, 9, 21, 23, 24] ; wavelen windows to look at
+
+
+;; LITERATURE WAVELENGTHS
+;; These shouldn't change very much
+
+lit_wvls = dblarr(25)         ; wavelengths according to the literature
+; sorted by window number
+lit_wvls[0] = 180.401
+lit_wvls[1] = 182.859         ;???
+lit_wvls[2] = 184.536
+lit_wvls[3] = 185.213
+lit_wvls[4] = 186.880
+lit_wvls[5] = 188.216
+lit_wvls[6] = 192.858         ;???are Ca lines more widely distributed?
+lit_wvls[7] = 193.874
+lit_wvls[8] = 195.119
+lit_wvls[9] = 197.860         ; ??? Couldn't find Fe IX on the table
+lit_wvls[10] = 200.972
+lit_wvls[11] = 202.044
+lit_wvls[12] = 203.826
+lit_wvls[13] = 208.500; There doesn't seem to be a Ca XVI line here 
+lit_wvls[14] = 255.000;Couldnt' find an Fe XXIV line on the table anywhere
+lit_wvls[15] = 256.686
+lit_wvls[16] = 258.375
+lit_wvls[17] = 262.948
+lit_wvls[18] = 264.233
+lit_wvls[19] = 270.519
+lit_wvls[20] = 275.352
+lit_wvls[21] = 276.579
+lit_wvls[22] = 278.402
+lit_wvls[23] = 280.737
+lit_wvls[24] = 284.160
+
+

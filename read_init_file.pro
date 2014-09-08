@@ -15,6 +15,9 @@ FUNCTION READ_INIT_FILE, FNAME
   ENDWHILE
   FREE_LUN, lun
 
-  init_data = {lit_wvls : lit_wvls, l1_file : file1}
+  init_data = {lit_wvls : lit_wvls, $
+               l1_file : file, $
+               wvls : wvls, $
+               windowNs : windowNs}
   RETURN, INIT_DATA
 END
