@@ -1,4 +1,4 @@
-pro abswl,wd,mx,my,offset,params
+pro avg_abswl,wd,mx,my,offset,params
 ;wd is structure, x,y is 2Darray defining lower left and upper right of box
 ;in pixel numbers
 ;offset is the wl offset as a function of position, abs is the shift to

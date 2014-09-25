@@ -18,6 +18,10 @@ FUNCTION READ_INIT_FILE, FNAME
   init_data = {lit_wvls : lit_wvls, $
                l1_file : file, $
                wvls : wvls, $
-               windowNs : windowNs}
+               windowNs : windowNs, $
+               vel_corr : vel_corr, $
+               abswl_window : abswl_window, $
+               box_size : box_size}
+
   RETURN, INIT_DATA
 END

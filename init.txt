@@ -11,6 +11,12 @@ file = folder + basename
 wvls = [180, 185, 192, 195, 197, 276, 280, 284]
 windowNs = [0, 3, 6, 8, 9, 21, 23, 24] ; wavelen windows to look at
 
+;; BOX SIZE for point selection
+box_size = 3
+
+;; VELOCITY CORRECTION
+abswl_window = 3
+vel_corr = .026
 
 ;; LITERATURE WAVELENGTHS
 ;; These shouldn't change very much
@@ -23,7 +29,7 @@ lit_wvls[2] = 184.536
 lit_wvls[3] = 185.213
 lit_wvls[4] = 186.880
 lit_wvls[5] = 188.216
-lit_wvls[6] = 192.858         ;???are Ca lines more widely distributed?
+lit_wvls[6] = 192.394         ;???are Ca lines more widely distributed?
 lit_wvls[7] = 193.874
 lit_wvls[8] = 195.119
 lit_wvls[9] = 197.860         ; ??? Couldn't find Fe IX on the table

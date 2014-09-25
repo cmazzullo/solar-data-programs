@@ -1,4 +1,4 @@
-function tv_select, int, n
+function bright_select, int, n, box_size
 ;int is the 3 d array of wl, x, y
 ;left click to select points, right click to end
 ;int is the intensity image
@@ -22,11 +22,14 @@ function tv_select, int, n
      if (!mouse.button eq 1) then begin
         if ((x1 le nx) and (x1 ge 0) and (y1 le ny) and (y1 ge 0)) then begin
 ;the next statements add the new elements to the array
-           x = [x, round(x1)]
-           y = [y, round(y1)]
+           point = brightest_point(int1, round(x1), round(y1), box_size)
+           px = point[0]
+           py = point[1]
+           x = [x, px]
+           y = [y, py]
            n = n+1
 ; this makes black dots on image where points were measured
-           int1(x1-1:x1+1, y1-1:y1+1) = 0
+           int1(px-1:px+1, py-1:py+1) = 0
         endif
      endif
   endwhile
