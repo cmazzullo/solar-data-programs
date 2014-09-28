@@ -14,9 +14,13 @@ function window_velocity, data_windows ; big struct made by all_window_data
   ;; velocity given by art and chae paper
   ;; to get absolute wl: abswl=wl-offset(i,j)-abs 
   abswl_window = 3              ; use Fe VIII (window 3)
-  print, 'Using Fe VIII (window 3) to get absolute wavelength shift'
+  
+  print, '------------------------------------------------------------'
+  print, 'INSTRUCTIONS:'
+  print, 'Using Fe VIII (window ', abswl_window, ') to get absolute wavelength shift'
   print, 'Left click on the lower left and upper right corner to select a box'
-  print, 'Select a box around an area of quiet sun ', abswl_window
+  print, 'Select a box around an area of quiet sun'
+  print, '------------------------------------------------------------'
 
   wdfe8 = get_window(data_windows, abswl_window)
   wlcorr = wdfe8.wave_corr
@@ -27,7 +31,12 @@ function window_velocity, data_windows ; big struct made by all_window_data
   
   data = get_window(data_windows, 8)
   print, 'Displaying Fe XII (window 8)'
-  print, 'Select points with left click, then confirm selection with a right click'
+  print, '------------------------------------------------------------'
+  print, 'INSTRUCTIONS:'
+  print, 'Select points with left click, then confirm your selections'
+  print, ' with a right click'
+  print, '------------------------------------------------------------'
+
   points = bright_select(data.int, npts, box_size)
   
   ; column for wavelens, row for velocities  
@@ -59,7 +68,10 @@ function window_velocity, data_windows ; big struct made by all_window_data
         output[i, j, 2] = fitvel
      endfor
   endfor
+  print, '------------------------------------------------------------'
+  print, 'OUTPUT FORMAT:'
   print, 'Output format is a 3-dimensional array:'
   print, '[point #, line #, [x, y, velocity]]'
+  print, '------------------------------------------------------------'
   return, output
 end

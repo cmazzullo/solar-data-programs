@@ -21,10 +21,14 @@ function bright_select, int, n, box_size
      wait, 0.5
      if (!mouse.button eq 1) then begin
         if ((x1 le nx) and (x1 ge 0) and (y1 le ny) and (y1 ge 0)) then begin
-;the next statements add the new elements to the array
-           point = brightest_point(int1, round(x1), round(y1), box_size)
-           px = point[0]
-           py = point[1]
+           x1 = round(x1)
+           y1 = round(y1)
+; the next statements add the new elements to the array
+           l = box_size
+           window = int1[(x1-l):(x1+l), (y1-l):(y1+l)]
+           point = mymax(window)
+           px = x1 + point[0] - l
+           py = y1 + point[1] - l
            x = [x, px]
            y = [y, py]
            n = n+1
