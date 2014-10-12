@@ -3,7 +3,7 @@ function window_velocity, data_windows ; big struct made by all_window_data
   fname = 'init.txt'
   init_data = read_init_file(fname)
   print, 'Reading init data...'
-
+  loadct, 3 ; red temperature color table - very important!
   wvls = init_data.wvls
   windowNs = init_data.windowNs
   lit_wvls = init_data.lit_wvls
@@ -14,9 +14,9 @@ function window_velocity, data_windows ; big struct made by all_window_data
   ;; abswl gives the wavelength of a part of the quiet sun
   ;; we need to subtract literature wavelength, then add shift for
   ;; velocity given by art and chae paper
-  ;; to get absolute wl: abswl=wl-offset(i,j)-abs 
+  ;; to get absolute wl: abswl=wl-offset(i,j)-abs
   abswl_window = 3              ; use Fe VIII (window 3)
-  
+
   print, '------------------------------------------------------------'
   print, 'INSTRUCTIONS:'
   print, 'Using Fe VIII (window ', abswl_window, ') to get absolute wavelength shift'
@@ -30,7 +30,7 @@ function window_velocity, data_windows ; big struct made by all_window_data
   abswl, wdfe8, mx, my, wlcorr, params
   abswl_shift = lit_wvls[abswl_window] - params(1)
   print, 'abswl shift = ', abswl_shift
-  
+
   data = get_window(data_windows, 8)
   print, 'Displaying Fe XII (window 8)'
   print, '------------------------------------------------------------'
@@ -40,9 +40,9 @@ function window_velocity, data_windows ; big struct made by all_window_data
   print, '------------------------------------------------------------'
 
   points = bright_select(data.int, npts, box_size)
-  
-  ; column for wavelens, row for velocities  
-  output = dblarr(npts, n_elements(wvls), 4) 
+
+  ; column for wavelens, row for velocities
+  output = dblarr(npts, n_elements(wvls), 4)
 
   ;; j is the current window number
   for j = 0, (n_elements(windowNs) - 1) do begin

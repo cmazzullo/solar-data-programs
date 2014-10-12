@@ -1,17 +1,17 @@
 ;; FILENAME
 ;; What .fits file would you like to look at?
 
-folder = "/swd4/Users/EIS/cmazzullo/solar-data-programs/"
+folder = "/home/chris/solar-data-programs/"
 basename = "eis_l1_20110329_094224.fits"
 
 file = folder + basename
- 
+
 ;; WAVELENGTH WINDOWS
 
 wvls = [180, 185, 192, 195, 197, 276, 280, 284]
 windowNs = [0, 3, 6, 8, 9, 21, 23, 24] ; wavelen windows to look at
 
-;; ESTIMATES: 
+;; ESTIMATES:
 
 ;; Format: [windowN, number_of_lines]
 ;; Contains the window numbers of windows that need
@@ -54,7 +54,7 @@ lit_wvls[9] = 197.858 ; Fe XIII (fixed)
 lit_wvls[10] = 200.972
 lit_wvls[11] = 202.044
 lit_wvls[12] = 203.826
-lit_wvls[13] = 208.500 ; There doesn't seem to be a Ca XVI line here 
+lit_wvls[13] = 208.500 ; There doesn't seem to be a Ca XVI line here
 lit_wvls[14] = 255.000 ; Couldnt' find an Fe XXIV line on the table anywhere
 lit_wvls[15] = 256.686
 lit_wvls[16] = 258.375
