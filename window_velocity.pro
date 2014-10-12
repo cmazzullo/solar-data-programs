@@ -9,6 +9,8 @@ function window_velocity, data_windows ; big struct made by all_window_data
   lit_wvls = init_data.lit_wvls
   vel_corr = init_data.vel_corr
   box_size = init_data.box_size
+  estimates = init_data.estimates
+
   ;; abswl gives the wavelength of a part of the quiet sun
   ;; we need to subtract literature wavelength, then add shift for
   ;; velocity given by art and chae paper
@@ -40,7 +42,7 @@ function window_velocity, data_windows ; big struct made by all_window_data
   points = bright_select(data.int, npts, box_size)
   
   ; column for wavelens, row for velocities  
-  output = dblarr(npts, n_elements(wvls), 3) 
+  output = dblarr(npts, n_elements(wvls), 4) 
 
   ;; j is the current window number
   for j = 0, (n_elements(windowNs) - 1) do begin
@@ -56,22 +58,32 @@ function window_velocity, data_windows ; big struct made by all_window_data
         ; Compensates for changes in y caused by tilted CCD
         y = yshiftap(wvls[j], wvls[3], y0)
 
-        fitvel = vel_at_point(x, y, data, windowN, lit_wvls, $
-                              abswl_shift, vel_corr)
-
         ;; output is a cube
         ;; point # is the x axis
         ;; window # is the y axis
         ;; x, y and velocity are stored up the z axis (like a stack)
         output[i, j, 0] = x
         output[i, j, 1] = y
-        output[i, j, 2] = fitvel
+        index = where(estimates[0, *] eq windowNs[j], count)
+        if count eq 0 then begin
+           fitvel = vel_at_point(x, y, data, windowN, lit_wvls, $
+                                 abswl_shift, vel_corr)
+           output[i, j, 2] = fitvel
+           output[i, j, 3] = !values.f_nan ; this spot is reserved for windows with >1 lines
+        endif else begin
+           for k = 0, n_elements(index) - 1 do begin
+              est_arr = estimates[*, index[k]]
+              fitvel = vel_at_point(x, y, data, windowN, 0, $
+                                    abswl_shift, vel_corr, estimates=est_arr)
+              output[i, j, 2 + k] = fitvel
+           endfor
+        endelse
      endfor
   endfor
   print, '------------------------------------------------------------'
   print, 'OUTPUT FORMAT:'
   print, 'Output format is a 3-dimensional array:'
-  print, '[point #, line #, [x, y, velocity]]'
+  print, '[point #, line #, [x, y, velocity (, ..., velocityN)]]'
   print, '------------------------------------------------------------'
   return, output
 end

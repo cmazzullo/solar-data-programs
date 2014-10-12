@@ -21,7 +21,8 @@ FUNCTION READ_INIT_FILE, FNAME
                windowNs : windowNs, $
                vel_corr : vel_corr, $
                abswl_window : abswl_window, $
-               box_size : box_size}
+               box_size : box_size, $
+               estimates : estimates}
 
   RETURN, INIT_DATA
 END

@@ -4,14 +4,18 @@
 ;; LIT_WVLS is an array containing the wavelengths according to
 ;; the literature
 
-function vel_at_point, x, y, data, windown, lit_wvls, abswl_shift, vel_corr
+function vel_at_point, x, y, data, windown, lit_wvls, abswl_shift, vel_corr, estimates=est
   
-  wvl = wvl_at_point(x, y, data, abswl_shift, vel_corr)
-
-  delwvl = wvl - lit_wvls[windowN]
+  if keyword_set(est) then begin
+     wvl = wvl_at_point(x, y, data, abswl_shift, vel_corr, estimates=est)
+     lit_wvl = est[2]
+  endif else begin
+     wvl = wvl_at_point(x, y, data, abswl_shift, vel_corr)
+     lit_wvl = lit_wvls[windowN]
+  endelse
+  delwvl = wvl - lit_wvl
   c = 3 * 10^5                  ; Speed of light in km/s
-  v = c * delwvl / lit_wvls[windowN]
-
+  v = c * delwvl / lit_wvl
   return, v
 
 end

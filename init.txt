@@ -11,6 +11,24 @@ file = folder + basename
 wvls = [180, 185, 192, 195, 197, 276, 280, 284]
 windowNs = [0, 3, 6, 8, 9, 21, 23, 24] ; wavelen windows to look at
 
+;; ESTIMATES: 
+
+;; Format: [windowN, number_of_lines]
+;; Contains the window numbers of windows that need
+;; user-specified estimates. For example, window #21 contains the Mg
+;; VII and the Mg V lines, so we need to tell mpfitpeak how many
+;; gaussians to fit and about where they'll be.
+
+;; Values:
+;; Format: hash key, then an array of estimate arrays. Each estimate
+;; array will be used as a parameter for a run of mpfitpeak. Estimate
+;; arrays contain: [intensity, wavelength, std. dev.]
+
+;; Format:
+;; [[windowN, intensity, literature wavelength, std. dev.], [window2, etc...]]
+
+estimates = [[21, 2500, 276.579, 0.025], [21, 2500, 276.153, 0.025], [100, 0, 0, 0], [100, 0, 0, 0]]
+
 ;; BOX SIZE for point selection
 box_size = 3
 
@@ -32,7 +50,7 @@ lit_wvls[5] = 188.216
 lit_wvls[6] = 192.394 ; Fe XII
 lit_wvls[7] = 193.874
 lit_wvls[8] = 195.119 ; Fe XII
-lit_wvls[9] = 197.434 ; Fe XIII
+lit_wvls[9] = 197.858 ; Fe XIII (fixed)
 lit_wvls[10] = 200.972
 lit_wvls[11] = 202.044
 lit_wvls[12] = 203.826

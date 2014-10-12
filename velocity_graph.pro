@@ -1,4 +1,4 @@
-PRO VELOCITY_GRAPH, FILE
+PRO VELOCITY_GRAPH, window
 
   wvls = [180, 185, 192, 195, 197, 276, 280, 284]
   windowNs = [0, 3, 6, 8, 9, 21, 23, 24] ;wavelen windows to look at
