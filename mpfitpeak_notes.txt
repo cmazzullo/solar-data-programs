@@ -1,3 +1,0 @@
-window_21:
-
-fit = mpfitpeak(wvls, a, output, nterms=4, estimates=[2500, 276.6, 0.025])

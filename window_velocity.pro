@@ -2,8 +2,7 @@ function window_velocity, data_windows ; big struct made by all_window_data
   ;; Creates lit_wvls from an init file
   fname = 'init.txt'
   init_data = read_init_file(fname)
-  print, 'Reading init data...'
-  loadct, 3 ; red temperature color table - very important!
+  loadct, 3                     ; red temperature color table - very important!
   wvls = init_data.wvls
   windowNs = init_data.windowNs
   lit_wvls = init_data.lit_wvls
@@ -26,7 +25,7 @@ function window_velocity, data_windows ; big struct made by all_window_data
 
   wdfe8 = get_window(data_windows, abswl_window)
   wlcorr = wdfe8.wave_corr
-  ;params = 0
+                                ;params = 0
   abswl, wdfe8, mx, my, wlcorr, params
   abswl_shift = lit_wvls[abswl_window] - params(1)
   print, 'abswl shift = ', abswl_shift
@@ -41,8 +40,7 @@ function window_velocity, data_windows ; big struct made by all_window_data
 
   points = bright_select(data.int, npts, box_size)
 
-  ; column for wavelens, row for velocities
-  output = dblarr(npts, n_elements(wvls), 4)
+  output = dblarr(npts, n_elements(wvls), 5)
 
   ;; j is the current window number
   for j = 0, (n_elements(windowNs) - 1) do begin
@@ -55,27 +53,33 @@ function window_velocity, data_windows ; big struct made by all_window_data
         x = points[0, i]
         y0 = points[1, i]
 
-        ; Compensates for changes in y caused by tilted CCD
+        ;; Compensates for changes in y caused by tilted CCD
         y = yshiftap(wvls[j], wvls[3], y0)
 
         ;; output is a cube
         ;; point # is the x axis
         ;; window # is the y axis
-        ;; x, y and velocity are stored up the z axis (like a stack)
+        ;; x, y, uncertainty and velocity are stored up the z axis (like a stack)
         output[i, j, 0] = x
         output[i, j, 1] = y
         index = where(estimates[0, *] eq windowNs[j], count)
         if count eq 0 then begin
-           fitvel = vel_at_point(x, y, data, windowN, lit_wvls, $
-                                 abswl_shift, vel_corr)
-           output[i, j, 2] = fitvel
-           output[i, j, 3] = !values.f_nan ; this spot is reserved for windows with >1 lines
+           vel_arr = vel_at_point(x, y, data, windowN, lit_wvls, $
+                                  abswl_shift, vel_corr)
+           fitvel = vel_arr[0]
+           sigma = vel_arr[1]
+           output[i, j, 2] = sigma
+           output[i, j, 3] = fitvel
+           output[i, j, 4] = !values.f_nan ; this spot is reserved for windows with >1 lines
         endif else begin
            for k = 0, n_elements(index) - 1 do begin
               est_arr = estimates[*, index[k]]
-              fitvel = vel_at_point(x, y, data, windowN, 0, $
-                                    abswl_shift, vel_corr, estimates=est_arr)
-              output[i, j, 2 + k] = fitvel
+              vel_arr = vel_at_point(x, y, data, windowN, 0, $
+                                     abswl_shift, vel_corr, estimates=est_arr)
+              fitvel = vel_arr[0]
+              sigma = vel_arr[1]
+              output[i, j, 2] = sigma
+              output[i, j, 3 + k] = fitvel
            endfor
         endelse
      endfor
