@@ -16,18 +16,19 @@ function wvl_at_point, x, y, data, abswl_shift, wvl_corr, estimates=est
   ;; If estimates are given, use them in the fit.
   if keyword_set(est) then begin
      fit = mpfitpeak(data.wvl, data.int[*, x, y], output, nterms=4, $
-                     error=data.err[*, x, y], estimates=est[1:*])
+                     error=data.err[*, x, y], estimates=est[1:*], perror=perror)
   endif else begin
      fit = mpfitpeak(data.wvl, data.int[*, x, y], output, nterms=4, $
-                     error=data.err[*, x, y])
+                     error=data.err[*, x, y], perror=perror)
   endelse
 
+  print, perror
+  wvl_error = perror[1]
   wvl = output[1]               ; Centroid of the Gaussian
-  sigma = output[2]             ; Gaussian sigma (uncertainty)
 
   ; then use wave_corr to correct for orbital variations
   ; and add the absolute wavelength shift and manual correction
   wvl = wvl - data.wave_corr[x, y] + abswl_shift + wvl_corr
-  return, [wvl, sigma]
+  return, [wvl, wvl_error]
 
 end

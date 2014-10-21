@@ -17,11 +17,11 @@ function vel_at_point, x, y, data, windown, lit_wvls, abswl_shift, vel_corr, est
   endelse
 
   wvl = wvl_arr[0]
-  sigma = wvl_arr[1]
-
-  delwvl = lit_wvl - wvl
+  wvl_error = wvl_arr[1]
   c = 3 * 10^5                  ; Speed of light in km/s
-  v = c * delwvl / lit_wvl
-  return, [v, sigma]
+  vel_error = (wvl_error * c) / lit_wvl
+  delwvl = lit_wvl - wvl
+ v = c * delwvl / lit_wvl
+  return, [v, vel_error]
 
 end

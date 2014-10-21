@@ -27,11 +27,11 @@ PRO VELOCITY_GRAPH, window
   write_png, filename, tvrd(/true)
   print, 'File written to ', filename
 
-  ;; column for wavelens, row for velocities  
-  output = dblarr(n_elements(wvls), npts) 
-  
+  ;; column for wavelens, row for velocities
+  output = dblarr(n_elements(wvls), npts)
+
   for j = 0, (n_elements(windowNs) - 1) do begin
-     
+
      windowN = windowNs[j]      ;which data window to view
      data = eis_getwindata(FILE, windowN, /refill)
      newdata = dblarr(3, npts)

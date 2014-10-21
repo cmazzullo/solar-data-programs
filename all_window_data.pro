@@ -1,5 +1,6 @@
 ;; Gets all of the window data for all of the windows listed in
 ;; windowNs out of a given file and returns it in a big struct.
+
 function all_window_data, file, windowNs ; level 1 file, window #s
 
   data = eis_getwindata(file, 0, /refill, /quiet)
@@ -15,4 +16,3 @@ function all_window_data, file, windowNs ; level 1 file, window #s
   return, data_struct
 
 end
-
