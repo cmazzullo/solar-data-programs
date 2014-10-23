@@ -9,9 +9,9 @@ init_data = read_init_file(fname)
 
 file = init_data.l1_file
 print, 'file = ', file
-wvls = init_data.wvls
+;; wvls = init_data.wvls
 windowNs = init_data.windowNs
-lit_wvls = init_data.lit_wvls
-box_size = init_data.box_size
+;; lit_wvls = init_data.lit_wvls
+;; box_size = init_data.box_size
 print, 'Using file', file
 dws = all_window_data(file, windowNs)

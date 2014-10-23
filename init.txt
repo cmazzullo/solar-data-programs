@@ -2,17 +2,17 @@
 ;; What .fits file would you like to look at?
 
 folder = "/home/chris/solar/solar-data-programs/"
-;; basename = "eis_l1_20110329_094224.fits"
-basename = "eis_l1_20140903_080333.fits"
+basename = "eis_l1_20110329_094224.fits"
+;; basename = "eis_l1_20140903_080333.fits"
 file = folder + basename
 
 ;; WAVELENGTH WINDOWS
 
-;; wvls = [180, 185, 192, 195, 197, 276, 280, 284]
-;; windowNs = [0, 3, 6, 8, 9, 21, 23, 24] ; wavelen windows to look at
-
 wvls = [180, 185, 192, 195, 197, 276, 280, 284]
-windowNs = [0, 1, 2, 3, 4, 5 ,6, 7] ; wavelen windows to look at
+windowNs = [0, 3, 6, 8, 9, 21, 23, 24] ; wavelen windows to look at
+
+;; wvls = [180, 185, 192, 195, 197, 276, 280, 284]
+;; windowNs = [0, 1, 2, 3, 4, 5 ,6, 7] ; wavelen windows to look at
 
 ;; ESTIMATES:
 
