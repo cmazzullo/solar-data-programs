@@ -2,14 +2,6 @@
 folder = '/swd4/Users/EIS/cmazzullo/fits-files/'
 basename = "eis_l1_20110329_094224.fits"
 ;basename = "eis_l1_20140815_235312.fits"
-=======
-;; FILENAME
-;; What .fits file would you like to look at?
-
-folder = "/home/chris/solar/solar-data-programs/"
-basename = "eis_l1_20110329_094224.fits"
-;; basename = "eis_l1_20140903_080333.fits"
->>>>>>> 0aa9fc39578020010508b1c379c667fe6062d37a:init.txt
 file = folder + basename
 
 windowNs = [0, 3, 6, 8, 9, 21, 23, 24]
@@ -20,17 +12,9 @@ do_abswl = 0                ; Whether or not to add abswl shift
 abswl_window = 3
 ;; vel_corr = .026 ;; absolute wavelength shift - right now it's factored in already!
 display_window = 6
-<<<<<<< HEAD:oldinit2.pro
 
 ;; wvls = [180, 185, 192, 195, 197, 276, 280, 284]
 ;; windowNs = [0, 1, 2, 3, 4, 5 ,6, 7] ; wavelen windows to look at
-=======
->>>>>>> newbranch:oldinit2.pro
-
-;; ESTIMATES:
-;; Format:
-;; [[windowN, intensity, literature wavelength, std. dev.], [window2, etc...]]
-estimates = [[21, 2500, 276.579, 0.025], [21, 2500, 276.153, 0.025], [100, 0, 0, 0], [100, 0, 0, 0]]
 
 ;; BOX SIZE for point selection
 box_size = 3
