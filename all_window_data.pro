@@ -3,7 +3,7 @@
 
 function all_window_data, file, windowNs ; level 1 file, window #s
 
-  data = eis_getwindata(file, 0, /refill, /quiet)
+  data = eis_getwindata(file, windowNs[0], /refill, /quiet)
   data_struct = create_struct('filename', file, 'window_numbers', windowNs)
 
   for j = 0, (n_elements(windowNs) - 1) do begin
