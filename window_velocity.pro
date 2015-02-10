@@ -69,8 +69,7 @@ function vel_at_point, x, y, data, windown, lit_wvls, abswl_shift, estimates=est
   wvl_error = wvl_arr[1]
   c = 3.0 * 10.0^5                  ; Speed of light in km/s
   vel_error = (wvl_error * c) / lit_wvl
-  delwvl = lit_wvl - wvl
-  v = c * delwvl / lit_wvl
+  v = c * (lit_wvl - wvl) / lit_wvl
   return, [v, vel_error]
 
 end
