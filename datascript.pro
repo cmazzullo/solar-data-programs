@@ -1,3 +1,0 @@
-pro datascript
-@init
-

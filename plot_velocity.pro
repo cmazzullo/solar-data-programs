@@ -1,3 +1,6 @@
+;; This is the basic template for v_along_loop
+;; You should probably use v_along_loop instead
+
 ;; This program displays an intensity picture of the sun at a certain
 ;; wavelength and allows the user to select points along a loop. The
 ;; velocity at those points is then plotted as a function of distance

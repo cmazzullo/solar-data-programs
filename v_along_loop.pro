@@ -1,3 +1,25 @@
+;; This program displays an intensity picture of the sun at a certain
+;; wavelength and allows the user to select points along a loop. The
+;; velocity at those points is then plotted as a function of distance
+;; along the loop.
+
+;; ARGUMENTS
+;; - INPUTS
+
+;; windowN: the wavelength window of the intensity picture
+
+;; vel_output: the output of get_all_velocity.pro, a struct containing
+;; velocity data
+
+;;  - OUTPUTS
+
+;; output: the fit parameters and velocity at the selected points, as
+;; output by process_points.pro. The format is: 
+;; [point, window, param] where the params are peak height, velocity, line width,
+;; height error, velocity error and width error.
+
+;; points: the x-y points selected by the user in the window that they used
+
 pro v_along_loop, windowN, vel_output, output, points, run_number=run_number
   @init
   cube = vel_output.cube

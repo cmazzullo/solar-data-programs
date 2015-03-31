@@ -1,19 +1,26 @@
-function two_windows, cube
+;; NOTE
+;; This programs return points as if they were selected in the LEFT window!
+;; INPUTS
+;; cube: the data cube containing intensity and velocity 
+;; win1: the window to display on the left
+;; win2: the window to display on the right
+
+;; OUTPUTS
+;; n: the number of points selected
+
+function two_windows, cube, win1, win2, n
   @init
-  n_mg = 5 ;; MG VII in the cube
-  n_fe = 1 ;; FE VIII 
+  wvl1 = lit_wvls[windowNs[win1]]
+  wvl2 = lit_wvls[windowNs[win2]]
 
-  mg_wvl = lit_wvls[windowNs[n_mg]]
-  fe_wvl = lit_wvls[windowNs[n_fe]]
+  int1 = reform(cube[win1, 0, *, *])
+  int2 = reform(cube[win2, 0, *, *])
 
-  mg_int = reform(cube[n_mg, 0, *, *])
-  fe_int = reform(cube[n_fe, 0, *, *])
-
-  dimen = size(mg_int)
+  dimen = size(int1)
   xdim = dimen[1]
   ydim = dimen[2]
 
-  both_int = [mg_int * 5, fe_int]
+  both_int = [sigrange(int1), sigrange(int2)]
   both_int[ where( both_int ge 100000.0 ) ] = 0.0
 
   xpoints = 0
@@ -26,22 +33,29 @@ function two_windows, cube
      wait, 0.5
      x = round(x)
      y = round(y)
+
+     xs = intarr(2)
+     ys = intarr(2)
+
      if (!mouse.button eq 1) then begin
-        if ((x le 2*xdim) and (x ge 0) and (y le 2*ydim) and (y ge 0)) then begin
+        if ((x le 2*xdim) and (x ge 0) and (y le ydim) and (y ge 0)) then begin
            frame = floor(x / xdim)
            other = (frame + 1) mod 2
-           wvls = [mg_wvl, fe_wvl]
+           wvls = [wvl1, wvl2]
            wvl0 = wvls[frame]
            wvl = wvls[other]
-
-           y_other = round(yshiftap(wvl, wvl0, y))
-           print, wvl, wvl0, y, y_other
            x_other = other * xdim + (x mod xdim)
-           both_int(x - 1 : x + 1, y - 1 : y + 1) = 100000
-           both_int(x, y) = 0
-           both_int(x_other - 1 : x_other + 1, y_other - 1 : y_other + 1) = 100000
-           xpoints = [xpoints, round(x)]
-           ypoints = [ypoints, round(y)]
+           y_other = round(yshift2(wvl, wvl0, y))
+           xs[other] = x_other
+           xs[frame] = x
+           ys[other] = y_other
+           ys[frame] = x
+
+           xpoints = [xpoints, round(xs[0])]
+           ypoints = [ypoints, round(ys[0])]
+
+           both_int(x - 1 : x + 1, y - 1 : y + 1) = 0.0
+           both_int(x_other - 1 : x_other + 1, y_other - 1 : y_other + 1) = 0.0
         endif
      endif
   endwhile
@@ -51,6 +65,7 @@ function two_windows, cube
   points = intarr(2, n_elements(xpoints))
   points[0, *] = xpoints
   points[1, *] = ypoints
+  n = n_elements(xpoints)
   return, points
 
 end

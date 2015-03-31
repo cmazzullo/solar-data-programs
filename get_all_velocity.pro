@@ -20,8 +20,11 @@ function fit_to_velocity, fit_window, lit_wvl, abswl_shift
   return, new_window
 end
 
-function get_all_velocity
+;; This function now stores all of the information in the init file
+;; that was used to create the velocity fit in the returned
+;; data_struct
 
+function get_all_velocity
   @init
   N = n_elements(windowNs)
   window_names = strarr(N)
@@ -59,7 +62,8 @@ function get_all_velocity
 
   data_struct = create_struct( data_struct, $
                                'window_names',    window_names,  $
-                               'cube',            cube )
+                               'cube',            cube, $
+                               'lit_wvls', lit_wvls, $
+                               'abswl_window', abswl_window )
   return, data_struct
-
 end
