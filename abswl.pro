@@ -10,7 +10,7 @@ pro abswl,wd,mx,my,offset,params
   err=wd.err
   intav=average(int,1)
   intav=reform(intav)
-  exptv,intav
+  plot_image,intav
   tvpos,x1,y1
   wait, 0.5
   mx(0)=x1
@@ -36,13 +36,14 @@ pro abswl,wd,mx,my,offset,params
         for k=0,nwl-1 do begin
            f=interpap(int(*,i,j),wl1,wl(k))
            if f gt 0. then begin
-              av(k)=av(k)+f
-              m(k)=m(k)+1.
+              av[k]=av[k]+f
+              m[k]=m[k]+1.
            endif
         endfor
      endfor
   endfor
   av=av/m
+  print, av
   plot,wl,av,psym=1
   print,m,'  Number of points at each wavelength'
 ; so now I have the average profile on the wl scale
